@@ -29,7 +29,8 @@ int main(int argc, const char * argv[]) {
                 [player roll];
             }
             
-            
+            if (player.currentSquare == 100)
+                gameOver = YES;
             
         }
         

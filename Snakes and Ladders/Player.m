@@ -38,19 +38,18 @@
     NSLog(@"You rolled a: %lu", randomDieValue);
     self.currentSquare+=randomDieValue;
     NSString *current = [NSString stringWithFormat:@"%ld",(long)self.currentSquare];
-    //NSLog(@"current: %@", current);
     
     if ([self.gameLogic objectForKey:current]){
         if ([[self.gameLogic valueForKey:current] integerValue] < self.currentSquare) {
             NSLog(@"Oh no, you landed on a snake!");
             self.currentSquare = [[self.gameLogic valueForKey:current] intValue];
-            NSLog(@"You slid back to square: %lu", self.currentSquare);
+            if(self.currentSquare < 100)NSLog(@"You slid back to square: %lu", self.currentSquare);
             
         }
         else {
             NSLog(@"Yay, you landed on a ladder!");
             self.currentSquare = [[self.gameLogic valueForKey:current] integerValue];
-            NSLog(@"You jumped to square: %lu", self.currentSquare);
+            if (self.currentSquare < 100)NSLog(@"You jumped to square: %lu", self.currentSquare);
         }
     }
     else {
@@ -58,7 +57,15 @@
     }
     
     // check for a win
-    
+    if (self.currentSquare == 100){
+        NSLog(@"You won the game!!");
+    }
+    else if (self.currentSquare > 100) {
+        NSLog(@"You rolled past 100, go back %lu spaces to %lu", self.currentSquare-100, 100-(self.currentSquare-100));
+        self.currentSquare = 100-(self.currentSquare-100);
+    }
+    
+    
 }
 
 @end
