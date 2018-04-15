@@ -12,13 +12,13 @@
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         
-        BOOL gameOn = YES;
+        BOOL gameOver = NO;
         Player *player = [Player new];
         
         NSLog(@"WELCOME TO SNAKES AND LADDERS! \nType \"roll\" or \"r\" to roll the die:");
         
         
-        while (gameOn) {
+        while (gameOver == NO) {
             
             char str[100];
             fgets (str, 100, stdin);
@@ -28,6 +28,7 @@ int main(int argc, const char * argv[]) {
             if ([inputString containsString:@"roll"] | [inputString containsString:@"r"]) {
                 [player roll];
             }
+            
             
             
         }

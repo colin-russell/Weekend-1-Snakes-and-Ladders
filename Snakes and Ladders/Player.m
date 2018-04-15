@@ -15,16 +15,50 @@
     self = [super init];
     if (self) {
         _currentSquare = 0;
-        _gameLogic = @{@4: @14, @9: @31, @17: @7, @20: @38, @28: @84, @40: @59, @51: @67, @63: @81, @64: @60, @89: @26, @95: @73, @99: @78};
+        _gameLogic = [NSDictionary dictionaryWithObjectsAndKeys:
+                      @14, @"4",
+                      @31, @"9",
+                      @7, @"17",
+                      @38, @"20",
+                      @84, @"28",
+                      @59, @"40",
+                      @67, @"51",
+                      @81, @"63",
+                      @60, @"64",
+                      @26, @"89",
+                      @73, @"95",
+                      @78, @"99",
+                      nil];
     }
     return self;
 }
 
 - (void)roll {
     NSInteger randomDieValue = arc4random_uniform(6)+1;
-    self.currentSquare+=randomDieValue;
     NSLog(@"You rolled a: %lu", randomDieValue);
-    NSLog(@"You are now on square: %lu", self.currentSquare);
+    self.currentSquare+=randomDieValue;
+    NSString *current = [NSString stringWithFormat:@"%ld",(long)self.currentSquare];
+    //NSLog(@"current: %@", current);
+    
+    if ([self.gameLogic objectForKey:current]){
+        if ([[self.gameLogic valueForKey:current] integerValue] < self.currentSquare) {
+            NSLog(@"Oh no, you landed on a snake!");
+            self.currentSquare = [[self.gameLogic valueForKey:current] intValue];
+            NSLog(@"You slid back to square: %lu", self.currentSquare);
+            
+        }
+        else {
+            NSLog(@"Yay, you landed on a ladder!");
+            self.currentSquare = [[self.gameLogic valueForKey:current] integerValue];
+            NSLog(@"You jumped to square: %lu", self.currentSquare);
+        }
+    }
+    else {
+        NSLog(@"You landed on square: %lu", self.currentSquare);
+    }
+    
+    // check for a win
+    
 }
 
 @end
